@@ -1,7 +1,6 @@
 # User configuration file typically located at `~/.config/nerd-dictation/nerd-dictation.py`
 import re
 
-
 # -----------------------------------------------------------------------------
 # Replace Multiple Words
 
@@ -13,6 +12,19 @@ TEXT_REPLACE_REGEX = (
     ("\\b" "pre factor" "\\b", "refactor"),
     ("\\b" "agora core" "\\b", "Agregore"),
     ("\\b" "agora gore" "\\b", "Agregore"),
+
+    ("\\b" "a p eyes" "\\b", "APIs"),
+
+    ("\\b" "\s?equals\s?" "\\b", "="),
+    ("\\b" "\s?plus\s?" "\\b", "+"),
+    ("\\b" "\s?hyphen\s?" "\\b", "-"),
+    ("\\b" "\s?asterisk\s?" "\\b", "*"),
+    ("\\b" "\s?tilda\s?" "\\b", "~"),
+
+    ("\\b" "\s?under\s?score\s?" "\\b", "_"),
+    ("\\b" "\s?hash\s?tag\s?" "\\b", "#"),
+    ("\\b" "\s?back\s?slash\s?" "\\b", "\\\\"),
+    ("\\b" "\s?back\s?tick\s?" "\\b", "`"),
 )
 
 TEXT_REPLACE_REGEX = tuple(
@@ -30,7 +42,6 @@ WORD_REPLACE = {
     "linux": "Linux",
     "vex": "Vex",
     "vax": "Vex",
-
 
     # It's also possible to ignore words entirely.
     "um": "",
@@ -53,14 +64,13 @@ CLOSING_PUNCTUATION = {
     "period": ".",
 
     "comma": ",",
-    "karma": ", ",
-    "calmer": ", ",
-    "comment": ", ",
+    "karma": ",",
+    "calmer": ",",
+    "comment": ",",
 
     "question mark": "?",
     "exclamation mark": '!',
 
-    "hyphen":  "-",
     "colin": ":",
     "semi colon": ";",
 
@@ -77,11 +87,7 @@ OPENING_PUNCTUATION = {
     "open square": '[',
 }
 
-# -----------------------------------------------------------------------------
-# Main Processing Function
-
-def nerd_dictation_process(text):
-
+def word_typing(text):
     for match, replacement in TEXT_REPLACE_REGEX:
         text = match.sub(replacement, text)
 
@@ -113,3 +119,25 @@ def nerd_dictation_process(text):
     words[:] = [w for w in words if w]
 
     return " ".join(words)
+
+def do_nothing():
+     return  ""
+
+def word_scream(text):
+     return word_typing(text).upper()
+
+text_mode = "speak"
+
+modes = {
+    "speak":  word_typing,
+    "silence":  do_nothing,
+    "scream":  word_scream
+}
+
+# -----------------------------------------------------------------------------
+# Main Processing Function
+
+def nerd_dictation_process(text):
+    if text_mode == "speak":
+         return word_typing(text)
+    return text
