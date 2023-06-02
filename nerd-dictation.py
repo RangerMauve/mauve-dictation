@@ -10,16 +10,48 @@ TEXT_REPLACE_REGEX = (
     ("\\b" "key word" "\\b", "keyword"),
     ("\\b" "be factor" "\\b", "refactor"),
     ("\\b" "pre factor" "\\b", "refactor"),
+    ("\\b" "a wait" "\\b", "await"),
+    ("\\b" "hyper core" "\\b", "hypercore"),
+
+    ("\\b" "get hub" "\\b", "Github"),
+    ("\\b" "git hub" "\\b", "Github"),
+    ("\\b" "good have" "\\b", "Github"),
+    ("\\b" "get have" "\\b", "Github"),
+
+    ("\\b" "fedor verse" "\\b", "Fediverse"),
+    ("\\b" "fed averse" "\\b", "Fediverse"),
+    ("\\b" "activity pub" "\\b", "ActivityPub"),
+
+    ("\\b" "web recorder" "\\b", "Webrecorder"),
+
+    ("\\b" "sadie panel" "\\b", "Sutty panel"),
+    ("\\b" "sorry panel" "\\b", "Sutty panel"),
+    ("\\b" "saudi panel" "\\b", "Sutty panel"),
+
+    ("\\b" "hi fi" "\\b", "Hypha"),
+
     ("\\b" "agora core" "\\b", "Agregore"),
     ("\\b" "agora gore" "\\b", "Agregore"),
+    ("\\b" "agricole" "\\b", "Agregore"),
+    ("\\b" "agricola" "\\b", "Agregore"),
+    ("\\b" "agra court" "\\b", "Agregore"),
 
     ("\\b" "a p eyes" "\\b", "APIs"),
+    ("\\b" "a p i" "\\b", "API"),
+
+    ("\\b" "w three see" "\\b", "W3C"),
+    ("\\b" "I pfs" "\\b", "IPFS"),
+    ("\\b" "I pianos" "\\b", "IPNS"),
+    ("\\b" "you are a?l" "\\b", "URL"),
+    ("\\b" "u r l" "\\b", "URL"),
 
     ("\\b" "\s?equals\s?" "\\b", "="),
     ("\\b" "\s?plus\s?" "\\b", "+"),
     ("\\b" "\s?hyphen\s?" "\\b", "-"),
+    ("\\b" "\s?dash\s?" "\\b", "-"),
     ("\\b" "\s?asterisk\s?" "\\b", "*"),
     ("\\b" "\s?tilda\s?" "\\b", "~"),
+    ("\\b" "\s?dot\s?" "\\b", "."),
 
     ("\\b" "\s?under\s?score\s?" "\\b", "_"),
     ("\\b" "\s?hash\s?tag\s?" "\\b", "#"),
@@ -40,11 +72,14 @@ WORD_REPLACE = {
     "i": "I",
     "api": "API",
     "linux": "Linux",
+    "jason": "JSON",
+
     "vex": "Vex",
     "vax": "Vex",
 
     # It's also possible to ignore words entirely.
     "um": "",
+    "huh": "",
 }
 
 
@@ -66,7 +101,6 @@ CLOSING_PUNCTUATION = {
     "comma": ",",
     "karma": ",",
     "calmer": ",",
-    "comment": ",",
 
     "question mark": "?",
     "exclamation mark": '!',
