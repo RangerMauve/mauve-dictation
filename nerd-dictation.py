@@ -35,15 +35,19 @@ TEXT_REPLACE_REGEX = (
     ("\\b" "agricole" "\\b", "Agregore"),
     ("\\b" "agricola" "\\b", "Agregore"),
     ("\\b" "agra court" "\\b", "Agregore"),
+    ("\\b" "agra gore" "\\b", "Agregore"),
 
     ("\\b" "a p eyes" "\\b", "APIs"),
     ("\\b" "a p i" "\\b", "API"),
+
+    ("\\b" "cp you" "\\b", "CPU"),
 
     ("\\b" "w three see" "\\b", "W3C"),
     ("\\b" "I pfs" "\\b", "IPFS"),
     ("\\b" "I pianos" "\\b", "IPNS"),
     ("\\b" "you are a?l" "\\b", "URL"),
     ("\\b" "u r l" "\\b", "URL"),
+    ("\\b" "you are else" "\\b", "URLs"),
 
     ("\\b" "\s?equals\s?" "\\b", "="),
     ("\\b" "\s?plus\s?" "\\b", "+"),
