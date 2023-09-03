@@ -49,6 +49,8 @@ TEXT_REPLACE_REGEX = (
     ("\\b" "u r l" "\\b", "URL"),
     ("\\b" "you are else" "\\b", "URLs"),
 
+    ("\\b" "m o g" "\\b", "emoji"),
+
     ("\\b" "\s?equals\s?" "\\b", "="),
     ("\\b" "\s?plus\s?" "\\b", "+"),
     ("\\b" "\s?hyphen\s?" "\\b", "-"),
@@ -60,7 +62,9 @@ TEXT_REPLACE_REGEX = (
     ("\\b" "\s?under\s?score\s?" "\\b", "_"),
     ("\\b" "\s?hash\s?tag\s?" "\\b", "#"),
     ("\\b" "\s?back\s?slash\s?" "\\b", "\\\\"),
+    ("\\b" "\s?slash\s?" "\\b", "/"),
     ("\\b" "\s?back\s?tick\s?" "\\b", "`"),
+    ("\\b" "\s?new\s?line\s?" "\\b", "\n"),
 )
 
 TEXT_REPLACE_REGEX = tuple(
@@ -77,6 +81,8 @@ WORD_REPLACE = {
     "api": "API",
     "linux": "Linux",
     "jason": "JSON",
+
+    "haifa": "Hypha",
 
     "vex": "Vex",
     "vax": "Vex",
@@ -125,7 +131,42 @@ OPENING_PUNCTUATION = {
     "open square": '[',
 }
 
-def word_typing(text):
+
+SPACE_REGEX = re.compile("\\b" "\s?space bar\s?" "\\b")
+
+# -----------------------------------------------------------------------------
+# Type individual characters
+
+NATO_ALPHABET = {
+    "alpha": "a",
+    "bravo": "b",
+    "charlie": "c",
+    "delta": "d",
+    "echo": "e",
+    "foxtrot": "f",
+    "golf": "g",
+    "hotel": "h",
+    "india": "i",
+    "juliett": "j",
+    "kilo": "k",
+    "lima": "l",
+    "mike": "m",
+    "november": "n",
+    "oscar": "o",
+    "papa": "p",
+    "quebec": "q",
+    "romeo": "r",
+    "sierra": "s",
+    "tango": "t",
+    "uniform": "u",
+    "victor": "v",
+    "whiskey": "w",
+    "xray, x-ray": "x",
+    "yankee": "y",
+    "zulu": "z"
+}
+
+def make_tokens(text):
     for match, replacement in TEXT_REPLACE_REGEX:
         text = match.sub(replacement, text)
 
@@ -150,32 +191,58 @@ def word_typing(text):
                 if w_test != w:
                     w = w_test
                     break
-
+        if w in NATO_ALPHABET:
+            w = NATO_ALPHABET[w]
         words[i] = w
 
     # Strip any words that were replaced with empty strings.
     words[:] = [w for w in words if w]
 
-    return " ".join(words)
+    return words
 
-def do_nothing():
-     return  ""
+
+def word_typing(text):
+    return SPACE_REGEX.sub(" ", " ".join(make_tokens(text)))
 
 def word_scream(text):
      return word_typing(text).upper()
+
+def word_snake(text):
+    return "_".join(make_tokens(text))
+
+def word_scream_snake(text):
+    return word_snake(text).upper()
+
+def word_camel(text):
+    tokens = make_tokens(text)
+    if not len(tokens):
+        return ""
+    first = tokens.pop(0)
+    capped = [word.capitalize() for word in tokens]
+    return first + "".join(capped)
+
+def word_dictate(text):
+    return "".join(make_tokens(text))
 
 text_mode = "speak"
 
 modes = {
     "speak":  word_typing,
-    "silence":  do_nothing,
-    "scream":  word_scream
+    "scream":  word_scream,
+    "snake": word_snake,
+    "screaming snake": word_scream_snake,
+    "camel": word_camel,
+    "dictate": word_dictate
 }
 
 # -----------------------------------------------------------------------------
 # Main Processing Function
 
 def nerd_dictation_process(text):
-    if text_mode == "speak":
-         return word_typing(text)
-    return text
+    global text_mode
+    for mode in modes:
+        activator = "mode "+mode
+        if activator in text:
+            text = text.replace(activator, "")
+            text_mode = mode
+    return modes[text_mode](text)
