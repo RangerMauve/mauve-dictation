@@ -147,7 +147,7 @@ NATO_ALPHABET = {
     "golf": "g",
     "hotel": "h",
     "india": "i",
-    "juliett": "j",
+    "juliet": "j",
     "kilo": "k",
     "lima": "l",
     "mike": "m",
@@ -161,7 +161,7 @@ NATO_ALPHABET = {
     "uniform": "u",
     "victor": "v",
     "whiskey": "w",
-    "xray, x-ray": "x",
+    "xray": "x",
     "yankee": "y",
     "zulu": "z"
 }
