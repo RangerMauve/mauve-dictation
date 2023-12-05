@@ -8,9 +8,18 @@ TEXT_REPLACE_REGEX = (
     ("\\b" "data type" "\\b", "data-type"),
     ("\\b" "copy on write" "\\b", "copy-on-write"),
     ("\\b" "key word" "\\b", "keyword"),
+    ("\\b" "x ray" "\\b", "x-ray"),
+
     ("\\b" "be factor" "\\b", "refactor"),
     ("\\b" "pre factor" "\\b", "refactor"),
+
     ("\\b" "a wait" "\\b", "await"),
+    ("\\b" "awaits" "\\b", "await"),
+    ("\\b" "a sink" "\\b", "async"),
+    ("\\b" "it a raider" "\\b", "iterator"),
+
+    ("\\b" "localhost" "\\b", "localhost"),
+
     ("\\b" "hyper core" "\\b", "hypercore"),
 
     ("\\b" "get hub" "\\b", "Github"),
@@ -37,6 +46,9 @@ TEXT_REPLACE_REGEX = (
     ("\\b" "agra court" "\\b", "Agregore"),
     ("\\b" "agra gore" "\\b", "Agregore"),
 
+    ("\\b" "been to" "\\b", "Ubuntu"),
+    ("\\b" "debbie in" "\\b", "Debian"),
+
     ("\\b" "a p eyes" "\\b", "APIs"),
     ("\\b" "a p i" "\\b", "API"),
 
@@ -45,11 +57,18 @@ TEXT_REPLACE_REGEX = (
     ("\\b" "w three see" "\\b", "W3C"),
     ("\\b" "I pfs" "\\b", "IPFS"),
     ("\\b" "I pianos" "\\b", "IPNS"),
+    ("\\b" "see id" "\\b", "cid"),
     ("\\b" "you are a?l" "\\b", "URL"),
     ("\\b" "u r l" "\\b", "URL"),
     ("\\b" "you are else" "\\b", "URLs"),
 
+    ("\\b" "probably tree" "\\b", "prolly tree"),
+
     ("\\b" "m o g" "\\b", "emoji"),
+
+    # these make it easier to program in go lang
+    ("\\b" "go error" "\\b", "err"),
+    ("\\b" "go format" "\\b", "go fmt"),
 
     ("\\b" "\s?equals\s?" "\\b", "="),
     ("\\b" "\s?plus\s?" "\\b", "+"),
@@ -61,8 +80,11 @@ TEXT_REPLACE_REGEX = (
 
     ("\\b" "\s?under\s?score\s?" "\\b", "_"),
     ("\\b" "\s?hash\s?tag\s?" "\\b", "#"),
+    ("\\b" "\s?at\s?sign\s?" "\\b", "@"),
+    ("\\b" "\s?dollar\s?sign\s?" "\\b", "$"),
     ("\\b" "\s?back\s?slash\s?" "\\b", "\\\\"),
     ("\\b" "\s?slash\s?" "\\b", "/"),
+    ("\\b" "\s?vertical bar\s?" "\\b", "|"),
     ("\\b" "\s?back\s?tick\s?" "\\b", "`"),
     ("\\b" "\s?new\s?line\s?" "\\b", "\n"),
 )
@@ -75,7 +97,7 @@ TEXT_REPLACE_REGEX = tuple(
 # -----------------------------------------------------------------------------
 # Replace Single Words
 
-# VOSK-API doesn't use capitals anywhere so they have to be explicit added in.
+# VOSK-API doesn't use capitals anywhere so they have to be explicitly added in.
 WORD_REPLACE = {
     "i": "I",
     "api": "API",
@@ -86,6 +108,9 @@ WORD_REPLACE = {
 
     "vex": "Vex",
     "vax": "Vex",
+
+    "okay": "ok",
+    "maine": "main",
 
     # It's also possible to ignore words entirely.
     "um": "",
@@ -122,6 +147,8 @@ CLOSING_PUNCTUATION = {
     "close bracket": ')',
     "close brace": '}',
     "close square": ']',
+    "close carrot": ">",
+    "close tick": "'",
 }
 
 OPENING_PUNCTUATION = {
@@ -129,6 +156,8 @@ OPENING_PUNCTUATION = {
     "open bracket": '(',
     "open brace": '{',
     "open square": '[',
+    "open carrot": '<',
+    "close tick": "'",
 }
 
 
@@ -161,7 +190,7 @@ NATO_ALPHABET = {
     "uniform": "u",
     "victor": "v",
     "whiskey": "w",
-    "xray": "x",
+    "x-ray": "x",
     "yankee": "y",
     "zulu": "z"
 }
@@ -224,14 +253,20 @@ def word_camel(text):
 def word_dictate(text):
     return "".join(make_tokens(text))
 
+def word_proper_camel(text):
+    camelized = word_camel(text)
+    proper = camelized[:1].upper() + camelized[1:]
+    return proper
+
 text_mode = "speak"
 
 modes = {
     "speak":  word_typing,
-    "scream":  word_scream,
+    "cap":  word_scream,
     "snake": word_snake,
     "screaming snake": word_scream_snake,
     "camel": word_camel,
+    "proper camel": word_proper_camel,
     "dictate": word_dictate
 }
 
